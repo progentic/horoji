@@ -1,0 +1,41 @@
+{
+  "required_docs": [
+    "docs/AGENTS.md",
+    "docs/ARCHITECTURE.md",
+    "docs/CODING_STYLE.md",
+    "docs/GOVERNANCE.md",
+    "docs/INVARIANTS.md",
+    "docs/PHASEMAP.md"
+  ],
+  "required_schemas": [
+    "json/bounded-change-contract.schema.json",
+    "json/evidence-record.schema.json",
+    "json/rejection-telemetry.schema.json",
+    "json/counterexample.schema.json",
+    "json/governance-pack.schema.json"
+  ],
+  "required_scripts": [
+    "scripts/check.sh",
+    "scripts/validate_governance.py",
+    "scripts/validate_json_instance.py"
+  ],
+  "phase_levels": [
+    "L0",
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "core_invariants": [
+    "The LLM is non-authoritative",
+    "The harness owns the authority boundary",
+    "Generated code is untrusted by default",
+    "Every admissible change carries evidence",
+    "Human judgment revises the acceptability surface",
+    "Rejected artifacts must not cross into trusted state",
+    "State transitions must be explicit and auditable",
+    "Evidence must be structured enough for replay",
+    "Deployment approval must not be inferred from generation success"
+  ]
+}

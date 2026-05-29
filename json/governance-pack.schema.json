@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horoji.org/json/governance-pack.schema.json",
+  "title": "Governance Pack Manifest",
+  "description": "Mechanical file manifest for the acceptability engineering governance pack.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["required_docs", "required_schemas", "required_scripts", "phase_levels", "core_invariants"],
+  "properties": {
+    "required_docs": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "type": "string" },
+      "contains": { "const": "docs/GOVERNANCE.md" }
+    },
+    "required_schemas": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "type": "string" }
+    },
+    "required_scripts": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string" }
+    },
+    "phase_levels": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "L0" },
+        { "const": "L1" },
+        { "const": "L2" },
+        { "const": "L3" },
+        { "const": "L4" },
+        { "const": "L5" }
+      ],
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "core_invariants": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

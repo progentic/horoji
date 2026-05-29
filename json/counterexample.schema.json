@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horoji.org/json/counterexample.schema.json",
+  "title": "Counterexample",
+  "description": "A preserved case that looked plausible but failed, was rejected, escaped review, or exposed a gap in the acceptability surface.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["counterexample_id", "source", "summary", "violated_constraint", "corrective_action"],
+  "properties": {
+    "counterexample_id": { "type": "string", "pattern": "^cx-[a-z0-9._-]+$" },
+    "source": { "type": "string", "enum": ["rejected_diff", "incident", "review_objection", "escaped_defect", "mutation_survivor", "security_finding", "architecture_drift"] },
+    "summary": { "type": "string", "minLength": 1 },
+    "original_intent_ref": { "type": "string" },
+    "candidate_ref": { "type": "string" },
+    "violated_constraint": { "type": "string", "minLength": 1 },
+    "rejection_reason": { "type": "string" },
+    "corrective_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_type", "description"],
+      "properties": {
+        "action_type": { "type": "string", "enum": ["schema_rule", "invariant", "property_test", "policy_gate", "sandbox_rule", "review_checklist", "documentation"] },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

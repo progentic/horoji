@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horoji.org/json/rejection-telemetry.schema.json",
+  "title": "Rejection Telemetry",
+  "description": "Machine-readable reason why a candidate could not cross the authority boundary.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rejection_id", "candidate_id", "contract_id", "created_at", "boundary_status", "failures", "remediation_hint"],
+  "properties": {
+    "rejection_id": { "type": "string", "pattern": "^reject-[a-z0-9._-]+$" },
+    "candidate_id": { "type": "string", "pattern": "^candidate-[a-z0-9._-]+$" },
+    "contract_id": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "boundary_status": { "type": "string", "const": "non_admissible" },
+    "failures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "severity", "message"],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "schema_violation",
+              "compile_failure",
+              "format_failure",
+              "static_analysis_failure",
+              "test_failure",
+              "property_test_failure",
+              "mutation_survivor",
+              "dependency_policy_violation",
+              "sandbox_violation",
+              "security_violation",
+              "architecture_drift",
+              "missing_evidence",
+              "scope_violation",
+              "forbidden_surface",
+              "review_rejection"
+            ]
+          },
+          "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+          "message": { "type": "string", "minLength": 1 },
+          "path": { "type": "string" },
+          "gate": { "type": "string" },
+          "log_ref": { "type": "string" }
+        }
+      }
+    },
+    "remediation_hint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "allowed_retry"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "allowed_retry": { "type": "boolean" },
+        "required_changes": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
